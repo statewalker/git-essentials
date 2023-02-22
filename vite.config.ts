@@ -10,6 +10,7 @@ const resolve = (path: string) => pathResolve(__dirname, path)
 
 export default defineConfig({
   build: {
+    emptyOutDir:true,
     minify: false,
     sourcemap: true,
     lib: {
@@ -19,7 +20,8 @@ export default defineConfig({
         resolve("src/clients/http/WebHttpClient.ts"),
       ],
       fileName: (_, entryName) => {
-        return `${entryName}.js`;
+        const path = entryName == 'index' ? '' : 'clients/';
+        return `${path}${entryName}.js`;
       },
       formats: ['es'],
     },
@@ -38,10 +40,12 @@ export default defineConfig({
       ]
     },
   },
+  /*
   plugins: [
     dts({
       insertTypesEntry: true,
       outputDir:'./dist/types'
     }),
   ]
+  */
 });
